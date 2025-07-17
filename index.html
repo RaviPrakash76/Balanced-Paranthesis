@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Balanced Parentheses Checker</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f0f2f5;
+      padding: 30px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    h1 {
+      color: #333;
+    }
+    textarea {
+      width: 400px;
+      height: 100px;
+      padding: 10px;
+      font-size: 16px;
+      margin-top: 10px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      resize: none;
+    }
+    button {
+      margin-top: 15px;
+      padding: 10px 20px;
+      font-size: 16px;
+      background: #007bff;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #0056b3;
+    }
+    .result {
+      margin-top: 20px;
+      font-size: 18px;
+      font-weight: bold;
+    }
+    .valid { color: green; }
+    .invalid { color: red; }
+  </style>
+</head>
+<body>
+  <h1>Balanced Parentheses Checker</h1>
+  <textarea id="input" placeholder="Enter expression with (), {}, []..."></textarea>
+  <br>
+  <button onclick="checkBalance()">Check Balance</button>
+  <div id="result" class="result"></div>
+
+  <script>
+    function checkBalance() {
+      const str = document.getElementById('input').value;
+      const stack = [];
+      const map = {
+        ')': '(',
+        '}': '{',
+        ']': '['
+      };
+
+      for (let char of str) {
+        if (char === '(' || char === '{' || char === '[') {
+          stack.push(char);
+        } else if (char === ')' || char === '}' || char === ']') {
+          if (stack.pop() !== map[char]) {
+            return displayResult(false);
+          }
+        }
+      }
+
+      displayResult(stack.length === 0);
+    }
+
+    function displayResult(isBalanced) {
+      const result = document.getElementById('result');
+      if (isBalanced) {
+        result.textContent = "The expression is balanced ✅";
+        result.className = 'result valid';
+      } else {
+        result.textContent = "The expression is NOT balanced ❌";
+        result.className = 'result invalid';
+      }
+    }
+  </script>
+</body>
+</html>
